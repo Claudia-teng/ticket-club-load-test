@@ -26,23 +26,21 @@ async function createClient() {
       email: `loadtest${clientCount}@test.com`,
       password: "loadtest",
     };
-    let start = new Date().getTime();
     const data = await axios.post(`https://claudia-teng.com/api/user/signin`, loginInfo);
-    console.log("time", (new Date().getTime() - start) / 1000);
     token = data.data.data.access_token;
 
-    // const socket = io(URL, {
-    //   auth: {
-    //     token,
-    //   },
-    // });
+    const socket = io(URL, {
+      auth: {
+        token,
+      },
+    });
 
-    // let start = new Date().getTime();
-    // socket.emit("check limit", 2);
-    // socket.on("check limit", (data) => {
-    //   console.log("time", (new Date().getTime() - start) / 1000);
-    //   console.log("check limit", data);
-    // });
+    let start = new Date().getTime();
+    socket.emit("check limit", 2);
+    socket.on("check limit", (data) => {
+      console.log("time", (new Date().getTime() - start) / 1000);
+      console.log("check limit", data);
+    });
 
     // socket.on("self select seat", (data) => {
     //   console.timeEnd("time");
