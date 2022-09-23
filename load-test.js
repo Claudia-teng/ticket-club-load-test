@@ -43,13 +43,13 @@ async function createClient() {
       let time = (new Date().getTime() - start) / 1000;
       records.push(time);
       console.log("finishedPeople", finishedPeople);
+      console.log("check limit", data);
       if (finishedPeople === MAX_CLIENTS) {
         let totalSeconds = records.reduce((a, b) => a + b);
         console.log("AVG", totalSeconds / MAX_CLIENTS);
         console.log("MAX", Math.max(...records));
         console.log("MIN", Math.min(...records));
       }
-      console.log("check limit", data);
     });
 
     // socket.on("self select seat", (data) => {
