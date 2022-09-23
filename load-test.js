@@ -2,7 +2,7 @@ const { io } = require("socket.io-client");
 const axios = require("axios");
 
 const URL = "https://claudia-teng.com";
-const MAX_CLIENTS = 100;
+const MAX_CLIENTS = 900;
 const CLIENT_CREATION_INTERVAL_IN_MS = 10;
 let finishedPeople = 0;
 let records = [];
@@ -39,11 +39,21 @@ async function createClient() {
     let start = new Date().getTime();
     socket.emit("check limit", 2);
     socket.on("check limit", (data) => {
+      console.log("check limit", data);
+    });
+
+    socket.on("self select seat", (data) => {
+      if (!data.error) {
+        console.log("self select seat", data);
+      } else {
+        console.log("error", data.error);
+      }
+
       finishedPeople++;
       let time = (new Date().getTime() - start) / 1000;
       records.push(time);
       console.log("finishedPeople", finishedPeople);
-      console.log("check limit", data);
+
       if (finishedPeople === MAX_CLIENTS) {
         let totalSeconds = records.reduce((a, b) => a + b);
         console.log("AVG", totalSeconds / MAX_CLIENTS);
@@ -52,30 +62,21 @@ async function createClient() {
       }
     });
 
-    // socket.on("self select seat", (data) => {
-    //   console.timeEnd("time");
-    //   if (!data.error) {
-    //     console.log("self select seat", data);
-    //   } else {
-    //     console.log("error", data.error);
-    //   }
-    // });
+    const areaId = getRandomArbitrary(9, 1);
+    const row = getRandomArbitrary(9, 1);
+    const column = getRandomArbitrary(9, 1);
 
-    // const areaId = getRandomArbitrary(9, 1);
-    // const row = getRandomArbitrary(9, 1);
-    // const column = getRandomArbitrary(9, 1);
-
-    // setTimeout(() => {
-    //   const seatInfo = {
-    //     sessionId: 2,
-    //     areaId,
-    //     row,
-    //     column,
-    //     rowIndex: row - 1,
-    //     columnIndex: column - 1,
-    //   };
-    //   socket.emit("select seat", seatInfo);
-    // }, 10000);
+    setTimeout(() => {
+      const seatInfo = {
+        sessionId: 2,
+        areaId,
+        row,
+        column,
+        rowIndex: row - 1,
+        columnIndex: column - 1,
+      };
+      socket.emit("select seat", seatInfo);
+    }, 10000);
   } catch (err) {
     console.log("err", err);
   }
