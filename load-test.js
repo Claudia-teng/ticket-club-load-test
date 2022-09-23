@@ -4,7 +4,8 @@ const axios = require("axios");
 const URL = "https://claudia-teng.com";
 const MAX_CLIENTS = 100;
 const CLIENT_CREATION_INTERVAL_IN_MS = 10;
-const record = [];
+let finishedPeople = 0;
+let records = [];
 
 let clientCount = 0;
 let interval = setInterval(createClient, CLIENT_CREATION_INTERVAL_IN_MS);
@@ -16,7 +17,7 @@ function getRandomArbitrary(min, max) {
 async function createClient() {
   clientCount++;
   console.log("clientCount", clientCount);
-  if (clientCount >= MAX_CLIENTS) {
+  if (clientCount > MAX_CLIENTS) {
     return clearInterval(interval);
   }
 
@@ -38,7 +39,16 @@ async function createClient() {
     let start = new Date().getTime();
     socket.emit("check limit", 2);
     socket.on("check limit", (data) => {
-      console.log("time", (new Date().getTime() - start) / 1000);
+      finishedPeople++;
+      let time = (new Date().getTime() - start) / 1000;
+      records.push(time);
+      console.log("finishedPeople", finishedPeople);
+      if (finishedPeople === MAX_CLIENTS) {
+        let totalSeconds = records.reduce((a, b) => a + b);
+        console.log("AVG", totalSeconds / MAX_CLIENTS);
+        console.log("MAX", Math.max(...records));
+        console.log("MIN", Math.min(...records));
+      }
       console.log("check limit", data);
     });
 
