@@ -2,7 +2,7 @@ const { io } = require("socket.io-client");
 const axios = require("axios");
 
 const URL = "https://claudia-teng.com";
-const MAX_CLIENTS = 900;
+const MAX_CLIENTS = 250;
 const CLIENT_CREATION_INTERVAL_IN_MS = 10;
 let finishedPeople = 0;
 let records = [];
@@ -16,10 +16,10 @@ function getRandomArbitrary(min, max) {
 
 async function createClient() {
   clientCount++;
-  console.log("clientCount", clientCount);
   if (clientCount > MAX_CLIENTS) {
     return clearInterval(interval);
   }
+  console.log("clientCount", clientCount);
 
   let token;
   try {
