@@ -36,6 +36,18 @@ async function createClient() {
     socket.emit("check limit", 2);
     socket.on("check limit", (data) => {
       console.log("check limit", data);
+
+      setTimeout(() => {
+        const seatInfo = {
+          sessionId: 2,
+          areaId: 1,
+          row: 1,
+          column: 1,
+          rowIndex: 0,
+          columnIndex: 0,
+        };
+        socket.emit("select seat", seatInfo);
+      }, 10000);
     });
 
     socket.on("self select seat", (data) => {
@@ -57,18 +69,6 @@ async function createClient() {
         console.log("MIN", Math.min(...records));
       }
     });
-
-    setTimeout(() => {
-      const seatInfo = {
-        sessionId: 2,
-        areaId: 1,
-        row: 1,
-        column: 1,
-        rowIndex: 0,
-        columnIndex: 0,
-      };
-      socket.emit("select seat", seatInfo);
-    }, 10000);
   } catch (err) {
     console.log("err", err);
   }
