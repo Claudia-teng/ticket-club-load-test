@@ -28,6 +28,22 @@ async function createClient() {
     socket.on("check limit", (data) => {
       console.log("check limit", data);
       console.log("check limit time", (new Date().getTime() - start) / 1000);
+
+      const areaId = getRandomArbitrary(9, 1);
+      const row = getRandomArbitrary(9, 1);
+      const column = getRandomArbitrary(9, 1);
+
+      setTimeout(() => {
+        const seatInfo = {
+          sessionId: 2,
+          areaId,
+          row,
+          column,
+          rowIndex: row - 1,
+          columnIndex: column - 1,
+        };
+        socket.emit("select seat", seatInfo);
+      }, 10000);
     });
 
     socket.on("self select seat", (data) => {
@@ -38,22 +54,6 @@ async function createClient() {
       }
       console.log("select seat time", (new Date().getTime() - start) / 1000);
     });
-
-    const areaId = getRandomArbitrary(9, 1);
-    const row = getRandomArbitrary(9, 1);
-    const column = getRandomArbitrary(9, 1);
-
-    setTimeout(() => {
-      const seatInfo = {
-        sessionId: 2,
-        areaId,
-        row,
-        column,
-        rowIndex: row - 1,
-        columnIndex: column - 1,
-      };
-      socket.emit("select seat", seatInfo);
-    }, 10000);
   } catch (err) {
     console.log("err", err);
   }
