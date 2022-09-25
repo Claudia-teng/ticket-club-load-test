@@ -30,6 +30,7 @@ async function createClient() {
       auth: {
         token,
       },
+      transports: ["websocket"],
     });
 
     let start = new Date().getTime();
