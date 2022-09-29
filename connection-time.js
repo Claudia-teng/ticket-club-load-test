@@ -1,5 +1,5 @@
 const { io } = require("socket.io-client");
-const axios = require("axios");
+const tokens = require("./tokens");
 
 const URL = "https://claudia-teng.com";
 const MAX_CLIENTS = 1000;
@@ -17,18 +17,10 @@ async function createClient() {
   }
   console.log("clientCount", clientCount);
 
-  let token;
   try {
-    const loginInfo = {
-      email: `loadtest${clientCount}@test.com`,
-      password: "loadtest",
-    };
-    const data = await axios.post(`https://claudia-teng.com/api/user/signin`, loginInfo);
-    token = data.data.data.access_token;
-
     const socket = io(URL, {
       auth: {
-        token,
+        token: tokens[clientCount],
       },
       transports: ["websocket"],
     });
