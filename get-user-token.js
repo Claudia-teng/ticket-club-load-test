@@ -1,7 +1,7 @@
 const axios = require("axios");
 const fs = require("fs");
 
-const MAX_CLIENTS = 10000;
+const MAX_CLIENTS = 1000;
 const CLIENT_CREATION_INTERVAL_IN_MS = 10;
 
 let clientCount = 0;
@@ -26,6 +26,7 @@ async function createClient() {
     token = data.data.data.access_token;
     finishedPeople++;
     tokens[finishedPeople] = token;
+    console.log("finishedPeople", finishedPeople);
 
     if (finishedPeople === MAX_CLIENTS) {
       fs.writeFile("tokens.json", JSON.stringify(tokens), function (err) {
