@@ -1,7 +1,7 @@
 const axios = require("axios");
 const fs = require("fs");
 
-const MAX_CLIENTS = 1000;
+const MAX_CLIENTS = 2000;
 const CLIENT_CREATION_INTERVAL_IN_MS = 10;
 
 let clientCount = 0;
