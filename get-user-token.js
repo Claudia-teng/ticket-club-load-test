@@ -1,13 +1,13 @@
 const axios = require("axios");
 const fs = require("fs");
 
-const MAX_CLIENTS = 2000;
+const MAX_CLIENTS = 4000;
 const CLIENT_CREATION_INTERVAL_IN_MS = 10;
 
-let clientCount = 0;
+let clientCount = 2000;
 let interval = setInterval(createClient, CLIENT_CREATION_INTERVAL_IN_MS);
 const tokens = {};
-let finishedPeople = 0;
+let finishedPeople = 2000;
 
 async function createClient() {
   clientCount++;
