@@ -1,13 +1,13 @@
 const axios = require("axios");
 const fs = require("fs");
 
-const MAX_CLIENTS = 10000;
+const MAX_CLIENTS = 15000;
 const CLIENT_CREATION_INTERVAL_IN_MS = 10;
 
-let clientCount = 8000;
+let clientCount = 14000;
 let interval = setInterval(createClient, CLIENT_CREATION_INTERVAL_IN_MS);
 const tokens = {};
-let finishedPeople = 8000;
+let finishedPeople = 14000;
 
 async function createClient() {
   clientCount++;
@@ -22,7 +22,7 @@ async function createClient() {
       email: `loadtest${clientCount}@test.com`,
       password: "loadtest",
     };
-    const data = await axios.post(`https://claudia-teng.com/api/user/signin`, loginInfo);
+    const data = await axios.post(`https://claudia-teng.com/user/signin`, loginInfo);
     token = data.data.data.access_token;
     finishedPeople++;
     tokens[finishedPeople] = token;
