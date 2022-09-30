@@ -2,7 +2,7 @@ const { io } = require("socket.io-client");
 const tokens = require("./all-tokens");
 
 const URL = "https://claudia-teng.com";
-const MAX_CLIENTS = 10;
+const MAX_CLIENTS = 10000;
 const CLIENT_CREATION_INTERVAL_IN_MS = 10;
 let finishedPeople = 0;
 let records = [];
