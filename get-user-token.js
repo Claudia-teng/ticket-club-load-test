@@ -29,7 +29,7 @@ async function createClient() {
     console.log("finishedPeople", finishedPeople);
 
     if (finishedPeople === MAX_CLIENTS) {
-      fs.writeFile("tokens-6.json", JSON.stringify(tokens), function (err) {
+      fs.writeFile("tokens.json", JSON.stringify(tokens), function (err) {
         if (err) console.log("err", err);
       });
     }
